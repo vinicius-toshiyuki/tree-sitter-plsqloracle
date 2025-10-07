@@ -12,6 +12,8 @@ const BUILTINS = require("./grammar_builtins.js");
 
 const { list } = require("./grammar/utils/index.cjs");
 
+const expressions = require("./grammar/expression.cjs");
+
 module.exports = grammar({
   name: "plsqloracle",
 
@@ -113,25 +115,28 @@ module.exports = grammar({
           $.semicolon_punctuation,
         ),
       ),
+    ...expressions,
     expression: ($) =>
       choice(
         $.string,
         $.number,
         $.boolean,
         $.constant,
-        prec(1, $.builtin_program),
+        $.builtin_program,
         $.accessor,
-        seq(
-          $.parenthesis_bracket__open,
-          list($.expression),
-          $.parenthesis_bracket__close,
-        ),
-        prec(
-          1,
         $.chain_expression,
+        $.sequence_expression,
         $.select_expression,
         $.exists_expression,
+        alias(seq($.prior_keyword, $.chain_accessor), $.prior_expression),
+        alias($.level_keyword, $.level_expression),
+        $.unary_expression,
+        $.analytic_expression,
+        $.between_expression,
+        $.binary_expression,
         $.call_expression,
+        $.case_expression,
+      ),
     procedure_definition: ($) =>
       seq(
         $.procedure_keyword,
@@ -622,6 +627,7 @@ module.exports = grammar({
     unary_operator: ($) => choice($.minus_operator, $.not_operator),
     binary_operator: ($) =>
       choice(
+        $.assign_operator,
         $.plus_operator,
         $.minus_operator,
         $.asterisk_operator,
