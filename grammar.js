@@ -47,6 +47,7 @@ module.exports = grammar({
         $.update_statement,
         $.forall_statement,
         $.for_statement,
+        $.while_statement,
         $.loop_statement,
         seq(
           choice($.exit_keyword, $.continue_keyword),
@@ -225,6 +226,7 @@ module.exports = grammar({
     update_keyword: () => KEYWORDS.SQL_KEYWORDS.UPDATE,
     values_keyword: () => KEYWORDS.SQL_KEYWORDS.VALUES,
     where_keyword: () => KEYWORDS.SQL_KEYWORDS.WHERE,
+    while_keyword: () => KEYWORDS.PLSQL_KEYWORDS.WHILE,
     with_keyword: () => KEYWORDS.SQL_KEYWORDS.WITH,
     within_keyword: () => KEYWORDS.SQL_KEYWORDS.WITHIN,
 
@@ -297,11 +299,18 @@ module.exports = grammar({
         $.for_keyword,
         field("declaration_identifier", $.identifier),
         $.in_keyword,
-        $.parenthesis_bracket__open,
-        $.select,
-        $.parenthesis_bracket__close,
+        choice(
+          seq(
+            $.parenthesis_bracket__open,
+            $.select,
+            $.parenthesis_bracket__close,
+          ),
+          seq($.expression, $.range_operator, $.expression),
+        ),
         $.loop_statement,
       ),
+    while_statement: ($) =>
+      seq($.while_keyword, $.expression, $.loop_statement),
     loop_statement: ($) =>
       seq(
         $.loop_keyword,
