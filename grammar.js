@@ -637,9 +637,17 @@ module.exports = grammar({
         optional($.colon_punctuation),
         field("accessor_identifier", $.identifier),
       ),
+
+    constant: () =>
+      token(
+        prec(
+          1,
+          choice(
+            KEYWORDS.BUILTIN_CONSTANTS.NULL,
+            KEYWORDS.BUILTIN_CONSTANTS.NO_DATA_FOUND,
+          ),
         ),
       ),
-    constant: () => token(prec(1, KEYWORDS.BUILTIN_CONSTANTS.NULL)),
     boolean: () =>
       token(
         prec(
