@@ -31,6 +31,8 @@ module.exports = grammar({
 
   word: ($) => $.identifier,
 
+  conflicts: ($) => [[$._select_column_asterisk_alias, $.accessor]],
+
   rules: {
     source_file: ($) =>
       repeat1(
