@@ -93,6 +93,7 @@ module.exports = grammar({
         ),
         prec(
           1,
+        $.chain_expression,
           seq(
             $.parenthesis_bracket__open,
             $.select,
@@ -361,8 +362,7 @@ module.exports = grammar({
           optional(
             seq(
               $.into_keyword,
-              repeat(seq($.accessor, $.comma_punctuation)),
-              $.accessor,
+              list($.chain_accessor, $.comma_punctuation),
             ),
           ),
           $.select_tables,
@@ -464,7 +464,7 @@ module.exports = grammar({
       seq(
         $.insert_keyword,
         $.into_keyword,
-        $.accessor,
+        $.chain_accessor,
         optional(
           seq(
             $.parenthesis_bracket__open,
@@ -486,7 +486,7 @@ module.exports = grammar({
             choice($.return_keyword, $.returning_keyword),
             list($.identifier),
             $.into_keyword,
-            list($.accessor),
+            list($.chain_accessor, $.comma_punctuation),
           ),
         ),
         $.semicolon_punctuation,
@@ -496,7 +496,7 @@ module.exports = grammar({
       seq(
         $.update_keyword,
         seq(
-          field("table_name", $.accessor),
+          field("table_name", $.chain_accessor),
           field("table_alias", optional($.identifier)),
         ),
         $.set_keyword,
@@ -551,6 +551,14 @@ module.exports = grammar({
       ),
     arrow_argument: ($) => seq($.identifier, $.arrow_operator, $.expression),
 
+    chain_expression: ($) =>
+      prec.left(
+        seq(
+          $.expression,
+          $.period_punctuation,
+          field("chain_member", $.identifier),
+        ),
+      ),
     unary_operator: ($) => choice($.minus_operator, $.not_operator),
     binary_operator: ($) =>
       choice(
@@ -586,14 +594,28 @@ module.exports = grammar({
           ),
         ),
       ),
-    udt: ($) => seq($.accessor, optional(/%ROWTYPE/i)),
     identifier: () => /[a-zA-Z_\$][a-zA-Z0-9_\$]*|".*?"/,
+    udt: ($) => seq($.chain_accessor, optional(/%ROWTYPE/i)),
+    chain_accessor: ($) =>
+      prec.left(
+        seq(
+          $.accessor,
+          optional(
+            seq(
+              $.period_punctuation,
+              list(
+                field("accessor_member", $.identifier),
+                $.period_punctuation,
+              ),
+            ),
+          ),
+        ),
+      ),
     accessor: ($) =>
       seq(
         optional($.colon_punctuation),
         field("accessor_identifier", $.identifier),
-        repeat(
-          seq($.period_punctuation, field("accessor_member", $.identifier)),
+      ),
         ),
       ),
     constant: () => token(prec(1, KEYWORDS.BUILTIN_CONSTANTS.NULL)),
