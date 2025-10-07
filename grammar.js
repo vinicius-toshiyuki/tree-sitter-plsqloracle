@@ -615,8 +615,8 @@ module.exports = grammar({
           ),
         ),
       ),
-    identifier: () => /[a-zA-Z_\$][a-zA-Z0-9_\$]*|".*?"/,
     udt: ($) => seq($.chain_accessor, optional(/%ROWTYPE/i)),
+    identifier: () => token(/[a-zA-Z_\$][a-zA-Z0-9_\$]*|"[^"]*?"/),
     chain_accessor: ($) =>
       prec.left(
         seq(
