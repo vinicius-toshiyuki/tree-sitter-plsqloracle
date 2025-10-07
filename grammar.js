@@ -599,8 +599,12 @@ module.exports = grammar({
         ),
       ),
     string: ($) =>
-      seq($.string_bracket__open, optional($._string_content), $.string_bracket__close),
-    _string_content: ($) =>
+      seq(
+        $.string_bracket__open,
+        optional($.string_content),
+        $.string_bracket__close,
+      ),
+    string_content: ($) =>
       seq($.string_part, repeat(seq($.string_marker, optional($.string_part)))),
     // number: () => token(choice(/\d+/, /\d+\.\d*/, /\.\d+/)),
     comment: () => token(choice(seq("--", /.*/), seq("/*", /.*/, "*/"))),
