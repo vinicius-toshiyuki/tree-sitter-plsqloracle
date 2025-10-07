@@ -33,6 +33,7 @@ module.exports = grammar({
     source_file: ($) =>
       repeat1(
         choice(
+          $.include_statement,
           $.block_statement,
           $.function_definition,
           $.procedure_definition,
@@ -62,7 +63,15 @@ module.exports = grammar({
           optional(seq($.when_keyword, $.expression)),
           $.semicolon_punctuation,
         ),
+        $.include_statement,
         $.package_body_statement,
+      ),
+    include_statement: ($) =>
+      seq(
+        $.directive_bracket__open,
+        $.include_keyword,
+        $.string,
+        $.directive_bracket__close,
       ),
     package_body_statement: ($) =>
       seq(
@@ -269,6 +278,10 @@ module.exports = grammar({
     square_bracket__close: () => "]",
     braces_bracket__open: () => "{",
     braces_bracket__close: () => "}",
+    directive_bracket__open: () => "{%",
+    directive_bracket__close: () => "%}",
+
+    include_keyword: () => "include",
 
     assign_operator: () => ":=",
     plus_operator: () => "+",
