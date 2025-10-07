@@ -177,6 +177,7 @@ export const PLSQL_KEYWORDS = {
   REM: /REM/i,
   REMAINDER: /REMAINDER/i,
   RENAME: /RENAME/i,
+  REPLACE: /REPLACE/i,
   RESULT: /RESULT/i,
   RESULT_CACHE: /RESULT_CACHE/i,
   RETURN: /RETURN/i,
@@ -304,6 +305,7 @@ export const SQL_KEYWORDS = {
   INTO: /INTO/i,
   IS: /IS/i,
   JOIN: /JOIN/i,
+  KEEP: /KEEP/i,
   LAST: /LAST/i,
   LEFT: /LEFT/i,
   LIKE: /LIKE/i,
@@ -355,6 +357,8 @@ export const BUILTIN_CONSTANTS = {
   TRUE: /TRUE/i,
   FALSE: /FALSE/i,
   NULL: /NULL/i,
+  DUAL: /DUAL/i,
+  NO_DATA_FOUND: /NO_DATA_FOUND/i,
 };
 
 export const BUILTIN_DATA_TYPES = {

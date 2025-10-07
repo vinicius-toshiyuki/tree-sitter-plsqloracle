@@ -20,7 +20,9 @@ export const PROGRAMS = {
   DAYOFWEEK: /DAYOFWEEK/i,
   DAYOFYEAR: /DAYOFYEAR/i,
   DECODE: /DECODE/i,
+  DENSE_RANK: /DENSE_RANK/i,
   EXTRACT: /EXTRACT/i,
+  FIRST: /FIRST/i,
   FLOOR: /FLOOR/i,
   GREATEST: /GREATEST/i,
   HOUR: /HOUR/i,
@@ -29,6 +31,7 @@ export const PROGRAMS = {
   INSTR: /INSTR/i,
   INSTRB: /INSTRB/i,
   INTERVAL: /INTERVAL/i,
+  LAST: /LAST/i,
   LAST_DAY: /LAST_DAY/i,
   LEAST: /LEAST/i,
   LENGTH: /LENGTH/i,
@@ -46,11 +49,16 @@ export const PROGRAMS = {
   NEXT_DAY: /NEXT_DAY/i,
   NOW: /NOW/i,
   NVL: /NVL/i,
+  NVL2: /NVL2/i,
   POSITION: /POSITION/i,
+  RANK: /RANK/i,
   REPLACE: /REPLACE/i,
+  REGEXP_LIKE: /REGEXP_LIKE/i,
   ROUND: /ROUND/i,
   ROUND: /ROUND/i,
   ROUND: /ROUND/i,
+  ROW_NUMBER: /ROW_NUMBER/i,
+  ROWNUM: /ROWNUM/i,
   RPAD: /RPAD/i,
   SECOND: /SECOND/i,
   STDDEV: /STDDEV/i,
@@ -77,5 +85,5 @@ export const PROGRAMS = {
 };
 
 export const array = {
-  PROGRAMS: Object.values(PROGRAMS)
+  PROGRAMS: Object.values(PROGRAMS),
 };
