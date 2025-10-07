@@ -94,6 +94,8 @@ module.exports = grammar({
         prec(
           1,
         $.chain_expression,
+        $.select_expression,
+        $.exists_expression,
           seq(
             $.parenthesis_bracket__open,
             $.select,
@@ -192,7 +194,10 @@ module.exports = grammar({
     all_keyword: () => KEYWORDS.SQL_KEYWORDS.ALL,
     as_keyword: () => KEYWORDS.SQL_KEYWORDS.AS,
     asc_keyword: () => KEYWORDS.SQL_KEYWORDS.ASC,
+    asterisk_keyword: () => "*",
+    bulk_keyword: () => KEYWORDS.PLSQL_KEYWORDS.BULK,
     by_keyword: () => KEYWORDS.SQL_KEYWORDS.BY,
+    collect_keyword: () => KEYWORDS.PLSQL_KEYWORDS.COLLECT,
     connect_keyword: () => KEYWORDS.SQL_KEYWORDS.CONNECT,
     desc_keyword: () => KEYWORDS.SQL_KEYWORDS.DESC,
     deterministic_keyword: () => KEYWORDS.PLSQL_KEYWORDS.DETERMINISTIC,
@@ -206,6 +211,7 @@ module.exports = grammar({
     insert_keyword: () => KEYWORDS.SQL_KEYWORDS.INSERT,
     into_keyword: () => KEYWORDS.SQL_KEYWORDS.INTO,
     join_keyword: () => KEYWORDS.SQL_KEYWORDS.JOIN,
+    keep_keyword: () => KEYWORDS.SQL_KEYWORDS.KEEP,
     last_keyword: () => KEYWORDS.SQL_KEYWORDS.LAST,
     left_keyword: () => KEYWORDS.SQL_KEYWORDS.LEFT,
     level_keyword: () => KEYWORDS.PLSQL_KEYWORDS.LEVEL,
@@ -224,6 +230,7 @@ module.exports = grammar({
     set_keyword: () => KEYWORDS.PLSQL_KEYWORDS.SET,
     start_keyword: () => KEYWORDS.SQL_KEYWORDS.START,
     table_keyword: () => KEYWORDS.SQL_KEYWORDS.TABLE,
+    union_keyword: () => KEYWORDS.SQL_KEYWORDS.UNION,
     update_keyword: () => KEYWORDS.SQL_KEYWORDS.UPDATE,
     values_keyword: () => KEYWORDS.SQL_KEYWORDS.VALUES,
     where_keyword: () => KEYWORDS.SQL_KEYWORDS.WHERE,
@@ -276,6 +283,8 @@ module.exports = grammar({
     arrow_operator: () => "=>",
     range_operator: () => token(prec(2, "..")),
     exists_operator: () => KEYWORDS.PLSQL_KEYWORDS.EXISTS,
+
+    dual_builtin: () => token(prec(1, KEYWORDS.BUILTIN_CONSTANTS.DUAL)),
 
     if_statement: ($) =>
       seq(
@@ -339,65 +348,84 @@ module.exports = grammar({
         $.semicolon_punctuation,
       ),
 
-    select: ($) =>
-      prec.left(
-        seq(
-          // WITH CLAUSE
-          optional(
-            list(
-              seq(
-                $.with_keyword,
-                $.identifier,
-                $.as_keyword,
-                $.select,
-                $.comma_punctuation,
-              ),
-            ),
-          ),
-          // SELECT
-          $.select_keyword,
-          optional(choice($.distinct_keyword, $.all_keyword)),
-          repeat(seq($.select_column, $.comma_punctuation)),
-          $.select_column,
-          optional(
+    exists_expression: ($) =>
+      seq(
+        $.exists_operator,
+        $.parenthesis_bracket__open,
+        $.select,
+        $.parenthesis_bracket__close,
+      ),
+
+    select: ($) => prec.left(choice($._with_select, $._plain_select)),
+
+    _plain_select: ($) =>
+      seq(
+        $.select_keyword,
+        optional(choice($.distinct_keyword, $.all_keyword)),
+        choice($.asterisk_keyword, list($.select_column, $.comma_punctuation)),
+        optional(
+          choice(
             seq(
+              $.bulk_keyword,
+              $.collect_keyword,
               $.into_keyword,
               list($.chain_accessor, $.comma_punctuation),
             ),
-          ),
-          $.select_tables,
-          optional(seq($.where_keyword, $.expression)),
-          optional(
-            seq(
-              optional(seq($.start_keyword, $.with_keyword, $.expression)),
-              $.connect_keyword,
-              $.by_keyword,
-              $.expression,
-            ),
-          ),
-          optional(
-            seq(
-              $.group_keyword,
-              $.by_keyword,
-              repeat(seq($.expression, $.comma_punctuation)),
-              $.expression,
-            ),
-          ),
-          optional(
-            seq(
-              $.order_keyword,
-              $.by_keyword,
-              repeat(seq($.expression, $.comma_punctuation)),
-              $.expression,
-            ),
+            seq($.into_keyword, list($.chain_accessor, $.comma_punctuation)),
           ),
         ),
+        $.select_tables,
+        optional(seq($.where_keyword, $.expression)),
+        optional(
+          seq(
+            optional(seq($.start_keyword, $.with_keyword, $.expression)),
+            $.connect_keyword,
+            $.by_keyword,
+            $.expression,
+          ),
+        ),
+        optional(
+          seq(
+            $.group_keyword,
+            $.by_keyword,
+            repeat(seq($.expression, $.comma_punctuation)),
+            $.expression,
+          ),
+        ),
+        optional($._order_by),
+        optional(
+          seq($.union_keyword, optional($.all_keyword), $._plain_select),
+        ),
       ),
+    _with_select: ($) => seq($.with_keyword, $.with_table),
+
+    with_table: ($) =>
+      seq(
+        field("table_alias", $.identifier),
+        $.as_keyword,
+        $.parenthesis_bracket__open,
+        $.select,
+        $.parenthesis_bracket__close,
+        choice(seq($.comma_punctuation, $.with_table), $._plain_select),
+      ),
+
     select_table: ($) =>
       seq(
-        field(
-          "table_name",
-          choice($.accessor, seq($.table_keyword, "(", $.expression, ")")),
+        choice(
+          $.dual_builtin,
+          field("table_name", $.accessor),
+          $.chain_expression,
+          seq(
+            $.table_keyword,
+            $.parenthesis_bracket__open,
+            $.expression,
+            $.parenthesis_bracket__close,
+          ),
+          seq(
+            $.parenthesis_bracket__open,
+            $.select,
+            $.parenthesis_bracket__close,
+          ),
         ),
         field("table_alias", optional($.identifier)),
       ),
@@ -421,44 +449,34 @@ module.exports = grammar({
         ),
       ),
     select_column: ($) =>
-      choice(
-        seq(
-          $.expression,
-          optional(
-            seq(
-              choice($.over_keyword, seq($.within_keyword, $.group_keyword)),
-              $.parenthesis_bracket__open,
-              $.select_partition_by,
-              $.select_order_by,
-              $.parenthesis_bracket__close,
-            ),
-          ),
-          optional(seq($.as_keyword, $.identifier)),
-        ),
-        prec(2, seq($.identifier, $.period_punctuation, "*")),
-      ),
-    select_partition_by: ($) =>
+      choice($._select_column_alias, $._select_column_asterisk_alias),
+    _select_column_alias: ($) =>
+      seq($.expression, optional($.as_keyword), optional($.identifier)),
+    _select_column_asterisk_alias: ($) =>
+      seq($.identifier, $.period_punctuation, $.asterisk_keyword),
+    _partition_by: ($) =>
       seq(
         $.partition_keyword,
         $.by_keyword,
-        repeat(seq($.expression, $.comma_punctuation)),
-        $.expression,
+        list($.expression, $.comma_punctuation),
       ),
-    select_order_by: ($) =>
-      seq(
-        $.order_keyword,
-        $.by_keyword,
-        repeat(
-          seq(
-            $.expression,
-            optional(choice($.asc_keyword, $.desc_keyword)),
-            optional(
-              seq($.nulls_keyword, choice($.first_keyword, $.last_keyword)),
+    _order_by: ($) =>
+      prec.left(
+        1,
+        seq(
+          $.order_keyword,
+          $.by_keyword,
+          list(
+            seq(
+              $.expression,
+              optional(choice($.asc_keyword, $.desc_keyword)),
+              optional(
+                seq($.nulls_keyword, choice($.first_keyword, $.last_keyword)),
+              ),
             ),
             $.comma_punctuation,
           ),
         ),
-        $.expression,
       ),
     insert_statement: ($) =>
       seq(
