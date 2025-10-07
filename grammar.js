@@ -96,6 +96,7 @@ module.exports = grammar({
         $.chain_expression,
         $.select_expression,
         $.exists_expression,
+        $.call_expression,
           seq(
             $.parenthesis_bracket__open,
             $.select,
@@ -537,14 +538,6 @@ module.exports = grammar({
         choice($.insert_statement, $.update_statement),
       ),
 
-    call: ($) =>
-      seq(
-        choice(prec(1, $.builtin_program), $.accessor),
-        $.parenthesis_bracket__open,
-        optional($.arguments),
-        $.parenthesis_bracket__close,
-      ),
-
     case_expression: ($) =>
       seq(
         $.case_keyword,
@@ -580,6 +573,15 @@ module.exports = grammar({
           field("chain_member", $.identifier),
         ),
       ),
+    call_expression: ($) =>
+      seq(
+        $.expression,
+        $.parenthesis_bracket__open,
+        optional(choice($.distinct_keyword, $.all_keyword)),
+        optional($.arguments),
+        $.parenthesis_bracket__close,
+      ),
+
     unary_operator: ($) => choice($.minus_operator, $.not_operator),
     binary_operator: ($) =>
       choice(
