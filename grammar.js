@@ -486,7 +486,7 @@ module.exports = grammar({
         optional(
           seq(
             $.parenthesis_bracket__open,
-            list($.identifier),
+            list($.identifier, $.comma_punctuation),
             $.parenthesis_bracket__close,
           ),
         ),
@@ -494,7 +494,7 @@ module.exports = grammar({
           seq(
             $.values_keyword,
             $.parenthesis_bracket__open,
-            list($.expression),
+            list($.expression, $.comma_punctuation),
             $.parenthesis_bracket__close,
           ),
           $.select,
@@ -502,7 +502,7 @@ module.exports = grammar({
         optional(
           seq(
             choice($.return_keyword, $.returning_keyword),
-            list($.identifier),
+            list($.identifier, $.comma_punctuation),
             $.into_keyword,
             list($.chain_accessor, $.comma_punctuation),
           ),
@@ -518,7 +518,10 @@ module.exports = grammar({
           field("table_alias", optional($.identifier)),
         ),
         $.set_keyword,
-        list(seq($.identifier, $.equal_operator, $.expression)),
+        list(
+          seq($.identifier, $.equal_operator, $.expression),
+          $.comma_punctuation,
+        ),
         optional(seq($.where_keyword, $.expression)),
         $.semicolon_punctuation,
       ),
