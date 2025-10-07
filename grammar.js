@@ -31,12 +31,19 @@ module.exports = grammar({
 
   rules: {
     source_file: ($) =>
-      repeat1(choice($.block_statement, $.function_definition)),
+      repeat1(
+        choice(
+          $.block_statement,
+          $.function_definition,
+          $.procedure_definition,
+        ),
+      ),
     statement: ($) =>
       choice(
         $.block_statement,
         seq($.expression, $.semicolon_punctuation),
         $.function_definition,
+        $.procedure_definition,
         $.if_statement,
         $.case_statement,
         seq($.return_keyword, $.expression, $.semicolon_punctuation),
@@ -97,31 +104,24 @@ module.exports = grammar({
         $.select_expression,
         $.exists_expression,
         $.call_expression,
+    procedure_definition: ($) =>
+      seq(
+        $.procedure_keyword,
+        field("program_name", $.identifier),
+        optional(
           seq(
             $.parenthesis_bracket__open,
-            $.select,
+            $.param_declaration_list,
             $.parenthesis_bracket__close,
           ),
         ),
-        seq(choice($.accessor, $.call), $.assign_operator, $.expression),
-        seq($.prior_keyword, $.accessor),
-        $.level_keyword,
-        prec(3, seq($.unary_operator, $.expression)),
-        prec(
-          2,
-          prec.right(
-            seq(
-              $.expression,
-              $.between_operator,
-              $.expression,
-              $.and_operator,
-              $.expression,
-            ),
-          ),
-        ),
-        prec(1, prec.right(seq($.expression, $.binary_operator, $.expression))),
-        $.call,
-        $.case_expression,
+        $.is_keyword,
+        repeat($.block_declaration),
+        $.begin_keyword,
+        repeat1($.statement),
+        $.end_keyword,
+        optional($.identifier),
+        $.semicolon_punctuation,
       ),
     function_definition: ($) =>
       seq(
