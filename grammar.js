@@ -62,9 +62,12 @@ module.exports = grammar({
       seq(
         $.begin_keyword,
         repeat1($.statement),
+        optional(seq($.exception_keyword, repeat1($._block_exception))),
         $.end_keyword,
         $.semicolon_punctuation,
       ),
+    _block_exception: ($) =>
+      seq($.when_keyword, $.expression, $.then_keyword, repeat1($.statement)),
     block_declaration: ($) =>
       seq(
         field("declaration_identifier", $.identifier),
@@ -177,6 +180,7 @@ module.exports = grammar({
     connect_keyword: () => KEYWORDS.SQL_KEYWORDS.CONNECT,
     desc_keyword: () => KEYWORDS.SQL_KEYWORDS.DESC,
     distinct_keyword: () => KEYWORDS.SQL_KEYWORDS.DISTINCT,
+    exception_keyword: () => KEYWORDS.SQL_KEYWORDS.EXCEPTION,
     first_keyword: () => KEYWORDS.SQL_KEYWORDS.FIRST,
     forall_keyword: () => KEYWORDS.PLSQL_KEYWORDS.FORALL,
     from_keyword: () => KEYWORDS.SQL_KEYWORDS.FROM,
