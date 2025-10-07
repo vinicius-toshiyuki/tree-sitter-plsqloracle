@@ -10,12 +10,7 @@
 const KEYWORDS = require("./grammar_keywords.js");
 const BUILTINS = require("./grammar_builtins.js");
 
-/**
- * @param {RuleOrLiteral} rule
- */
-function list(rule) {
-  return seq(repeat(seq(rule, ",")), rule);
-}
+const { list } = require("./grammar/utils/index.cjs");
 
 module.exports = grammar({
   name: "plsqloracle",
