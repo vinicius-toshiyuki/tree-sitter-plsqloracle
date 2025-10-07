@@ -102,12 +102,16 @@ module.exports = grammar({
     _block_exception: ($) =>
       seq($.when_keyword, $.expression, $.then_keyword, repeat1($.statement)),
     block_declaration: ($) =>
-      seq(
-        field("declaration_identifier", $.identifier),
-        optional($.constant_keyword),
-        $.type,
-        optional(seq($.assign_operator, $.expression)),
-        $.semicolon_punctuation,
+      choice(
+        prec(1, $.function_definition),
+        prec(1, $.procedure_definition),
+        seq(
+          field("declaration_identifier", $.identifier),
+          optional($.constant_keyword),
+          $.type,
+          optional(seq($.assign_operator, $.expression)),
+          $.semicolon_punctuation,
+        ),
       ),
     expression: ($) =>
       choice(
