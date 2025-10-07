@@ -12,6 +12,7 @@ enum TokenType {
 
 typedef struct plsqloracle_scanner_data_t {
   struct {
+    bool started;
     bool alt_string;
     char start_delimiter;
     char end_delimiter;
@@ -27,6 +28,7 @@ static void number_scan_integer_part(TSLexer *lexer);
 void *tree_sitter_plsqloracle_external_scanner_create() {
   plsqloracle_scanner_data_t *data =
       ts_malloc(sizeof(plsqloracle_scanner_data_t));
+  data->string.started = false;
   data->string.alt_string = false;
   data->string.start_delimiter = '\0';
   data->string.end_delimiter = '\0';
@@ -61,6 +63,10 @@ void tree_sitter_plsqloracle_external_scanner_deserialize(void *payload,
 
 static bool string_check_if_string_end(TSLexer *lexer,
                                        plsqloracle_scanner_data_t *data) {
+  if (!data->string.started) {
+    return false;
+  }
+
   if (lexer->eof(lexer)) {
     return true;
   }
@@ -133,7 +139,7 @@ bool tree_sitter_plsqloracle_external_scanner_scan(void *payload,
                                                    TSLexer *lexer,
                                                    const bool *valid_symbols) {
   plsqloracle_scanner_data_t *data = payload;
-  if (valid_symbols[STRING_BRACKET__OPEN]) {
+  if (valid_symbols[STRING_BRACKET__OPEN] && !data->string.started) {
     while (lexer->lookahead == ' ' || lexer->lookahead == '\n' ||
            lexer->lookahead == '\r' || lexer->lookahead == '\t') {
       lexer->advance(lexer, true);
@@ -169,6 +175,7 @@ bool tree_sitter_plsqloracle_external_scanner_scan(void *payload,
         lexer->result_symbol = STRING_BRACKET__OPEN;
         lexer->advance(lexer, false);
         lexer->mark_end(lexer);
+        data->string.started = true;
         return true;
       }
     } else if (lexer->lookahead == '\'') {
@@ -178,10 +185,11 @@ bool tree_sitter_plsqloracle_external_scanner_scan(void *payload,
       lexer->result_symbol = STRING_BRACKET__OPEN;
       lexer->advance(lexer, false);
       lexer->mark_end(lexer);
+      data->string.started = true;
       return true;
     }
   }
-  if (valid_symbols[STRING_BRACKET__CLOSE]) {
+  if (valid_symbols[STRING_BRACKET__CLOSE] && data->string.started) {
     if (data->string.alt_string &&
         lexer->lookahead == data->string.end_delimiter) {
       lexer->advance(lexer, false);
@@ -189,23 +197,25 @@ bool tree_sitter_plsqloracle_external_scanner_scan(void *payload,
         lexer->result_symbol = STRING_BRACKET__CLOSE;
         lexer->advance(lexer, false);
         lexer->mark_end(lexer);
+        data->string.started = false;
         return true;
       }
-
     } else if (!data->string.alt_string && lexer->lookahead == '\'') {
       lexer->result_symbol = STRING_BRACKET__CLOSE;
       lexer->advance(lexer, false);
       lexer->mark_end(lexer);
+      data->string.started = false;
       return true;
     }
   }
-  if (valid_symbols[STRING_MARKER] && string_check_if_string_marker(lexer)) {
+  if (valid_symbols[STRING_MARKER] && string_check_if_string_marker(lexer) &&
+      data->string.started) {
     lexer->advance(lexer, false);
     lexer->result_symbol = STRING_MARKER;
     lexer->mark_end(lexer);
     return true;
   }
-  if (valid_symbols[STRING_PART]) {
+  if (valid_symbols[STRING_PART] && data->string.started) {
     while (!string_check_if_string_end(lexer, data)) {
       lexer->advance(lexer, false);
       lexer->mark_end(lexer);
