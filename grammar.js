@@ -260,10 +260,19 @@ module.exports = grammar({
     not_operator: () => KEYWORDS.SQL_KEYWORDS.NOT,
     is_operator: () => KEYWORDS.SQL_KEYWORDS.IS,
     in_operator: () => KEYWORDS.SQL_KEYWORDS.IN,
+    not_in_operator: () =>
+      seq(KEYWORDS.SQL_KEYWORDS.NOT, KEYWORDS.SQL_KEYWORDS.IN),
     member_of_operator: () =>
       seq(KEYWORDS.PLSQL_KEYWORDS.MEMBER, KEYWORDS.SQL_KEYWORDS.OF),
+    not_member_of_operator: () =>
+      seq(
+        KEYWORDS.SQL_KEYWORDS.NOT,
+        KEYWORDS.PLSQL_KEYWORDS.MEMBER,
+        KEYWORDS.SQL_KEYWORDS.OF,
+      ),
     arrow_operator: () => "=>",
     range_operator: () => token(prec(2, "..")),
+    exists_operator: () => KEYWORDS.PLSQL_KEYWORDS.EXISTS,
 
     if_statement: ($) =>
       seq(
