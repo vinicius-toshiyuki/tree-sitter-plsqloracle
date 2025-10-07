@@ -27,10 +27,6 @@ try {
   console.error("Failed to read/parse json file: " + filePath);
 }
 
-const RULE = Object.fromEntries(
-  Object.keys(json.rules).map((key) => [key.toUpperCase(), key]),
-);
-
 function findProperties(object, filter, output) {
   switch (typeof object) {
     case "string":
@@ -60,6 +56,17 @@ function findProperties(object, filter, output) {
     }
   }
 }
+
+let RULE = [];
+findProperties(
+  json.rules,
+  (value) => typeof value === "object" && value.type === "ALIAS" && value.named,
+  RULE,
+);
+RULE = Object.fromEntries([
+  ...Object.keys(json.rules).map((key) => [key.toUpperCase(), key]),
+  ...RULE.map((alias) => [alias.value.toUpperCase(), alias.value]),
+]);
 
 let FIELD = [];
 findProperties(
