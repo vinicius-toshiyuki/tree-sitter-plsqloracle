@@ -579,9 +579,30 @@ module.exports = grammar({
         $.is_not_operator,
         $.is_operator,
         $.in_operator,
+        $.not_in_operator,
         $.member_of_operator,
+        $.not_member_of_operator,
       ),
-    builtin_program: () => choice(...BUILTINS.array.PROGRAMS),
+    builtin_program: ($) =>
+      choice(
+        $.first_builtin_program,
+        $.last_builtin_program,
+        $.rank_builtin_program,
+        $.dense_rank_builtin_program,
+        ...BUILTINS.array.PROGRAMS.filter(
+          (program) =>
+            ![
+              BUILTINS.PROGRAMS.FIRST,
+              BUILTINS.PROGRAMS.LAST,
+              BUILTINS.PROGRAMS.RANK,
+              BUILTINS.PROGRAMS.DENSE_RANK,
+            ].includes(program),
+        ).map((program) => token(program)),
+      ),
+    first_builtin_program: () => token(BUILTINS.PROGRAMS.FIRST),
+    last_builtin_program: () => token(BUILTINS.PROGRAMS.LAST),
+    rank_builtin_program: () => token(BUILTINS.PROGRAMS.RANK),
+    dense_rank_builtin_program: () => token(BUILTINS.PROGRAMS.DENSE_RANK),
     type: ($) => choice(prec(1, $.builtin_type), $.udt),
     builtin_type: ($) =>
       seq(
