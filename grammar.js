@@ -92,9 +92,10 @@ module.exports = grammar({
       ),
     block_statement: ($) =>
       seq(
-        optional(seq($.declare_keyword, repeat($.block_declaration))),
+        optional(seq($.declare_keyword, optional($.block_declaration_list))),
         $.block_body,
       ),
+    block_declaration_list: ($) => repeat1($.block_declaration),
     block_body: ($) =>
       seq(
         $.begin_keyword,
@@ -151,7 +152,7 @@ module.exports = grammar({
           ),
         ),
         $.is_keyword,
-        repeat($.block_declaration),
+        optional($.block_declaration_list),
         $.begin_keyword,
         repeat1($.statement),
         $.end_keyword,
@@ -169,7 +170,7 @@ module.exports = grammar({
         field("return_type", $.type),
         optional(choice($.deterministic_keyword, $.pipelined_keyword)),
         $.is_keyword,
-        repeat($.block_declaration),
+        optional($.block_declaration_list),
         $.begin_keyword,
         repeat1($.statement),
         $.end_keyword,
