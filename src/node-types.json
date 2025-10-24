@@ -473,8 +473,12 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
+        {
+          "type": "builtin_type_name",
+          "named": true
+        },
         {
           "type": "number",
           "named": true
@@ -489,6 +493,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "builtin_type_name",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "call_expression",

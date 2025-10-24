@@ -4285,289 +4285,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "BLOB",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "CLOB",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "DATE",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "TIMESTAMP",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "JSON",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "BOOLEAN",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "VARCHAR2",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "MLSLABEL",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "UROWID",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "VARCHAR",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "STRING",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "LONG",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "RAW",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "LONG RAW",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "ROWID",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "CHAR",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "CHARACTER",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "CHARACTER VARYING",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "CHAR VARYING",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "NATIONAL CHARACTER",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "NATIONAL CHAR",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "NCHAR",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "NVARCHAR2",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "TIMESTAMP WITH TIME ZONE",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "INTERVAL YEAR TO MONTH",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "INTERVAL DAY TO SECOND",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "TIMESTAMP WITH LOCAL TIME ZONE",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "TIME_UNCONSTRAINED",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "TIME_TZ_UNCONSTRAINED",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "TIMESTAMP_UNCONSTRAINED",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "TIMESTAMP_TZ_UNCONSTRAINED",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "YMINTERVAL_UNCONSTRAINED",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "DSINTERVAL_UNCONSTRAINED",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "TIMESTAMP_LTZ_UNCONSTRAINED",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "NUMBER",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "FLOAT",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "REAL",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "INTEGER",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "INT",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "SMALLINT",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "DECIMAL",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "NUMERIC",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "DEC",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "BINARY_INTEGER",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "NATURAL",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "NATURALN",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "POSITIVE",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "POSITIVEN",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "SIGNTYPE",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "PLS_INTEGER",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "BINARY_FLOAT",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "BINARY_DOUBLE",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "SIMPLE_INTEGER",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "SIMPLE_FLOAT",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "SIMPLE_DOUBLE",
-              "flags": "i"
-            },
-            {
-              "type": "PATTERN",
-              "value": "DOUBLE PRECISION",
-              "flags": "i"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "builtin_type_name"
         },
         {
           "type": "CHOICE",
@@ -4593,6 +4312,291 @@
               "type": "BLANK"
             }
           ]
+        }
+      ]
+    },
+    "builtin_type_name": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "BLOB",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "CLOB",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "DATE",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "TIMESTAMP",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "JSON",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "BOOLEAN",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "VARCHAR2",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "MLSLABEL",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "UROWID",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "VARCHAR",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "STRING",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "LONG",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "RAW",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "LONG RAW",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "ROWID",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "CHAR",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "CHARACTER",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "CHARACTER VARYING",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "CHAR VARYING",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "NATIONAL CHARACTER",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "NATIONAL CHAR",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "NCHAR",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "NVARCHAR2",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "TIMESTAMP WITH TIME ZONE",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "INTERVAL YEAR TO MONTH",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "INTERVAL DAY TO SECOND",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "TIMESTAMP WITH LOCAL TIME ZONE",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "TIME_UNCONSTRAINED",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "TIME_TZ_UNCONSTRAINED",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "TIMESTAMP_UNCONSTRAINED",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "TIMESTAMP_TZ_UNCONSTRAINED",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "YMINTERVAL_UNCONSTRAINED",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "DSINTERVAL_UNCONSTRAINED",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "TIMESTAMP_LTZ_UNCONSTRAINED",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "NUMBER",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "FLOAT",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "REAL",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "INTEGER",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "INT",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "SMALLINT",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "DECIMAL",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "NUMERIC",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "DEC",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "BINARY_INTEGER",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "NATURAL",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "NATURALN",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "POSITIVE",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "POSITIVEN",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "SIGNTYPE",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "PLS_INTEGER",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "BINARY_FLOAT",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "BINARY_DOUBLE",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "SIMPLE_INTEGER",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "SIMPLE_FLOAT",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "SIMPLE_DOUBLE",
+          "flags": "i"
+        },
+        {
+          "type": "PATTERN",
+          "value": "DOUBLE PRECISION",
+          "flags": "i"
         }
       ]
     },

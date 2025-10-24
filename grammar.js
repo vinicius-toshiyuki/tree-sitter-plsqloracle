@@ -675,7 +675,7 @@ module.exports = grammar({
     type: ($) => choice(prec(1, $.builtin_type), $.udt),
     builtin_type: ($) =>
       seq(
-        choice(...KEYWORDS.array.BUILTIN_DATA_TYPES),
+        $.builtin_type_name,
         optional(
           seq(
             $.parenthesis_bracket__open,
@@ -684,6 +684,7 @@ module.exports = grammar({
           ),
         ),
       ),
+    builtin_type_name: () => choice(...KEYWORDS.array.BUILTIN_DATA_TYPES),
     udt: ($) => seq($.chain_accessor, optional(/%ROWTYPE/i)),
     identifier: () => token(/[a-zA-Z_\$][a-zA-Z0-9_\$]*|"[^"]*?"/),
     chain_accessor: ($) =>
