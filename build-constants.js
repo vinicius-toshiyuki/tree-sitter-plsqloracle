@@ -57,15 +57,25 @@ function findProperties(object, filter, output) {
   }
 }
 
-let RULE = [];
+const ALIAS = [];
 findProperties(
   json.rules,
   (value) => typeof value === "object" && value.type === "ALIAS" && value.named,
-  RULE,
+  ALIAS,
 );
-RULE = Object.fromEntries([
+const SYMBOL = [];
+findProperties(
+  json.rules,
+  (value) =>
+    typeof value === "object" &&
+    value.type === "SYMBOL" &&
+    typeof value.name === "string",
+  SYMBOL,
+);
+const RULE = Object.fromEntries([
   ...Object.keys(json.rules).map((key) => [key.toUpperCase(), key]),
-  ...RULE.map((alias) => [alias.value.toUpperCase(), alias.value]),
+  ...ALIAS.map((alias) => [alias.value.toUpperCase(), alias.value]),
+  ...SYMBOL.map((symbol) => [symbol.name.toUpperCase(), symbol.name]),
 ]);
 
 let FIELD = [];
