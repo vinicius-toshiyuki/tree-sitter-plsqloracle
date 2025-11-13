@@ -16,6 +16,7 @@ const expressions = require("./grammar/expression.cjs");
 const keyword = require("./grammar/keyword.cjs");
 const operator = require("./grammar/operator.cjs");
 const punctuation = require("./grammar/punctuation.cjs");
+const directive = require("./grammar/directive.cjs");
 
 module.exports = grammar({
   name: "plsqloracle",
@@ -40,7 +41,7 @@ module.exports = grammar({
     source_file: ($) =>
       repeat1(
         choice(
-          $.include_statement,
+          $.directive_statement,
           $.block_statement,
           $.function_definition,
           $.procedure_definition,
@@ -70,15 +71,11 @@ module.exports = grammar({
           optional(seq($.when_keyword, $.expression)),
           $.semicolon_punctuation,
         ),
-        $.include_statement,
+        $.directive_statement,
         $.package_body_statement,
       ),
-    include_statement: ($) =>
+    ...directive,
       seq(
-        $.directive_bracket__open,
-        $.include_keyword,
-        $.string,
-        $.directive_bracket__close,
       ),
     package_body_statement: ($) =>
       seq(
