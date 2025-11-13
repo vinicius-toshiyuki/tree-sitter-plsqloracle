@@ -10,7 +10,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "include_statement"
+            "name": "directive_statement"
           },
           {
             "type": "SYMBOL",
@@ -23,6 +23,14 @@
           {
             "type": "SYMBOL",
             "name": "procedure_definition"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "udt_definition"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "package_spec_statement"
           },
           {
             "type": "SYMBOL",
@@ -183,7 +191,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "include_statement"
+          "name": "directive_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "package_spec_statement"
         },
         {
           "type": "SYMBOL",
@@ -191,7 +203,20 @@
         }
       ]
     },
-    "include_statement": {
+    "directive_statement": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_include_directive"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_include_type_directive"
+        }
+      ]
+    },
+    "_include_directive": {
       "type": "SEQ",
       "members": [
         {
@@ -209,6 +234,112 @@
         {
           "type": "SYMBOL",
           "name": "directive_bracket__close"
+        }
+      ]
+    },
+    "_include_type_directive": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "directive_bracket__open"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "include_keyword"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "colon_punctuation"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "type_keyword"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "directive_bracket__close"
+        }
+      ]
+    },
+    "package_spec_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "create_keyword"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "or_keyword"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "replace_keyword"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "package_keyword"
+        },
+        {
+          "type": "FIELD",
+          "name": "package_identifier",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "as_keyword"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "spec_declaration"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_keyword"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "closing_identifier",
+              "content": {
+                "type": "SYMBOL",
+                "name": "identifier"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "semicolon_punctuation"
         }
       ]
     },
@@ -290,6 +421,99 @@
         {
           "type": "SYMBOL",
           "name": "semicolon_punctuation"
+        }
+      ]
+    },
+    "spec_declaration": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "udt_definition"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "directive_statement"
+        }
+      ]
+    },
+    "udt_definition": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "record_definition"
+        }
+      ]
+    },
+    "record_definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "type_keyword"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "is_keyword"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "record_keyword"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parenthesis_bracket__open"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "record_member_declaration"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "comma_punctuation"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "record_member_declaration"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parenthesis_bracket__close"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "semicolon_punctuation"
+        }
+      ]
+    },
+    "record_member_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "type"
         }
       ]
     },
@@ -428,6 +652,10 @@
             "type": "SYMBOL",
             "name": "procedure_definition"
           }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "udt_definition"
         },
         {
           "type": "SEQ",
@@ -1502,6 +1730,11 @@
       "value": "PRIOR",
       "flags": "i"
     },
+    "record_keyword": {
+      "type": "PATTERN",
+      "value": "RECORD",
+      "flags": "i"
+    },
     "replace_keyword": {
       "type": "PATTERN",
       "value": "REPLACE",
@@ -1535,6 +1768,11 @@
     "table_keyword": {
       "type": "PATTERN",
       "value": "TABLE",
+      "flags": "i"
+    },
+    "type_keyword": {
+      "type": "PATTERN",
+      "value": "TYPE",
       "flags": "i"
     },
     "union_keyword": {
@@ -1571,6 +1809,10 @@
       "type": "PATTERN",
       "value": "WITHIN",
       "flags": "i"
+    },
+    "include_keyword": {
+      "type": "STRING",
+      "value": "include"
     },
     "semicolon_punctuation": {
       "type": "STRING",
@@ -1619,10 +1861,6 @@
     "directive_bracket__close": {
       "type": "STRING",
       "value": "%}"
-    },
-    "include_keyword": {
-      "type": "STRING",
-      "value": "include"
     },
     "assign_operator": {
       "type": "STRING",
