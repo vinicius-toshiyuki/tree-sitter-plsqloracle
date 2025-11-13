@@ -46,6 +46,7 @@ module.exports = grammar({
           $.function_definition,
           $.procedure_definition,
           $.udt_definition,
+          $.package_spec_statement,
           $.package_body_statement,
         ),
       ),
@@ -73,10 +74,21 @@ module.exports = grammar({
           $.semicolon_punctuation,
         ),
         $.directive_statement,
+        $.package_spec_statement,
         $.package_body_statement,
       ),
     ...directive,
+    package_spec_statement: ($) =>
       seq(
+        $.create_keyword,
+        optional(seq($.or_keyword, $.replace_keyword)),
+        $.package_keyword,
+        field("package_identifier", $.identifier),
+        $.as_keyword,
+        repeat1($.spec_declaration),
+        $.end_keyword,
+        optional(field("closing_identifier", $.identifier)),
+        $.semicolon_punctuation,
       ),
     package_body_statement: ($) =>
       seq(
@@ -91,6 +103,7 @@ module.exports = grammar({
         optional(field("closing_identifier", $.identifier)),
         $.semicolon_punctuation,
       ),
+    spec_declaration: ($) => choice($.udt_definition, $.directive_statement),
     udt_definition: ($) => choice($.record_definition),
     record_definition: ($) =>
       seq(
