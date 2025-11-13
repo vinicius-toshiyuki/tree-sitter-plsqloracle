@@ -67,6 +67,7 @@ module.exports = {
   pipe_keyword: () => KEYWORDS.PLSQL_KEYWORDS.PIPE,
   pipelined_keyword: () => KEYWORDS.PLSQL_KEYWORDS.PIPELINED,
   prior_keyword: () => KEYWORDS.SQL_KEYWORDS.PRIOR,
+  record_keyword: () => KEYWORDS.PLSQL_KEYWORDS.RECORD,
   replace_keyword: () => KEYWORDS.PLSQL_KEYWORDS.REPLACE,
   returning_keyword: () => KEYWORDS.PLSQL_KEYWORDS.RETURNING,
   row_keyword: () => KEYWORDS.PLSQL_KEYWORDS.ROW,

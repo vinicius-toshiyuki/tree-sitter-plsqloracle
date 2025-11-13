@@ -45,6 +45,7 @@ module.exports = grammar({
           $.block_statement,
           $.function_definition,
           $.procedure_definition,
+          $.udt_definition,
           $.package_body_statement,
         ),
       ),
@@ -90,6 +91,19 @@ module.exports = grammar({
         optional(field("closing_identifier", $.identifier)),
         $.semicolon_punctuation,
       ),
+    udt_definition: ($) => choice($.record_definition),
+    record_definition: ($) =>
+      seq(
+        $.type_keyword,
+        $.identifier,
+        $.is_keyword,
+        $.record_keyword,
+        $.parenthesis_bracket__open,
+        list($.record_member_declaration, $.comma_punctuation),
+        $.parenthesis_bracket__close,
+        $.semicolon_punctuation,
+      ),
+    record_member_declaration: ($) => seq($.identifier, $.type),
     block_statement: ($) =>
       seq(
         optional(seq($.declare_keyword, optional($.block_declaration_list))),
@@ -110,6 +124,7 @@ module.exports = grammar({
       choice(
         prec(1, $.function_definition),
         prec(1, $.procedure_definition),
+        $.udt_definition,
         seq(
           field("declaration_identifier", $.identifier),
           optional($.constant_keyword),
