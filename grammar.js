@@ -39,16 +39,19 @@ module.exports = grammar({
 
   rules: {
     source_file: ($) =>
-      repeat1(
-        choice(
-          $.directive_statement,
-          $.block_statement,
-          $.function_definition,
-          $.procedure_definition,
-          $.udt_definition,
-          $.package_spec_statement,
-          $.package_body_statement,
+      choice(
+        repeat1(
+          choice(
+            $.directive_statement,
+            $.block_statement,
+            $.function_definition,
+            $.procedure_definition,
+            $.udt_definition,
+            $.package_spec_statement,
+            $.package_body_statement,
+          ),
         ),
+        seq($.select, optional($.semicolon_punctuation)),
       ),
     statement: ($) =>
       choice(

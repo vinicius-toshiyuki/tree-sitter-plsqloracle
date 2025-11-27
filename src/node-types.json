@@ -271,6 +271,10 @@
           "named": true
         },
         {
+          "type": "like_operator",
+          "named": true
+        },
+        {
           "type": "lt_operator",
           "named": true
         },
@@ -288,6 +292,10 @@
         },
         {
           "type": "not_in_operator",
+          "named": true
+        },
+        {
+          "type": "not_like_operator",
           "named": true
         },
         {
@@ -1260,6 +1268,11 @@
     "fields": {}
   },
   {
+    "type": "like_operator",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "loop_keyword",
     "named": true,
     "fields": {}
@@ -1298,6 +1311,11 @@
   },
   {
     "type": "not_in_operator",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "not_like_operator",
     "named": true,
     "fields": {}
   },
@@ -2027,6 +2045,14 @@
         },
         {
           "type": "procedure_definition",
+          "named": true
+        },
+        {
+          "type": "select",
+          "named": true
+        },
+        {
+          "type": "semicolon_punctuation",
           "named": true
         },
         {
