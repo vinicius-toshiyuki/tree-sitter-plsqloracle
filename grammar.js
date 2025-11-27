@@ -551,6 +551,8 @@ module.exports = grammar({
         $.not_in_operator,
         $.member_of_operator,
         $.not_member_of_operator,
+        $.like_operator,
+        $.not_like_operator,
       ),
     builtin_program: ($) =>
       choice(

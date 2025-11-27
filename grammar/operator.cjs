@@ -32,6 +32,9 @@ module.exports = {
       KEYWORDS.PLSQL_KEYWORDS.MEMBER,
       KEYWORDS.SQL_KEYWORDS.OF,
     ),
+  like_operator: () => KEYWORDS.SQL_KEYWORDS.LIKE,
+  not_like_operator: () =>
+    seq(KEYWORDS.SQL_KEYWORDS.NOT, KEYWORDS.SQL_KEYWORDS.LIKE),
   arrow_operator: () => "=>",
   range_operator: () => token(prec(2, "..")),
   exists_operator: () => KEYWORDS.PLSQL_KEYWORDS.EXISTS,

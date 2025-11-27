@@ -142,6 +142,8 @@ export const GRAMMAR = {
         "NOT_IN_OPERATOR": "not_in_operator",
         "MEMBER_OF_OPERATOR": "member_of_operator",
         "NOT_MEMBER_OF_OPERATOR": "not_member_of_operator",
+        "LIKE_OPERATOR": "like_operator",
+        "NOT_LIKE_OPERATOR": "not_like_operator",
         "ARROW_OPERATOR": "arrow_operator",
         "RANGE_OPERATOR": "range_operator",
         "EXISTS_OPERATOR": "exists_operator",
