@@ -94,7 +94,24 @@ const GRAMMAR = {
 };
 
 fs.writeFileSync(
-  path.join(__dirname, "grammar-constants.ts"),
-  `export const GRAMMAR = ${JSON.stringify(GRAMMAR, undefined, 4)};`,
+  path.join(__dirname, "grammar-constants.js"),
+  `module.exports = ${JSON.stringify({ GRAMMAR }, undefined, 4)};`,
+  { encoding: "utf8" },
+);
+
+fs.writeFileSync(
+  path.join(__dirname, "grammar-constants.d.ts"),
+  `export const GRAMMAR: {
+    RULE: {
+      ${Object.entries(GRAMMAR.RULE)
+        .map(([key]) => `${key}: string;`)
+        .join("\n        ")}
+    },
+    FIELD: {
+      ${Object.entries(GRAMMAR.FIELD)
+        .map(([key]) => `${key}: string;`)
+        .join("\n        ")}
+    },
+};`,
   { encoding: "utf8" },
 );

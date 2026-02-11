@@ -11,7 +11,7 @@
   },
   "exports": {
     ".": "./bindings/node/index.js",
-    "./grammar-constants.js": "./grammar-contants.js"
+    "./grammar-constants": "./grammar-constants.js"
   },
   "types": "bindings/node",
   "keywords": [
@@ -22,6 +22,9 @@
   ],
   "files": [
     "grammar.js",
+    "build-constants.js",
+    "grammar-constants.js",
+    "grammar-constants.d.ts",
     "tree-sitter.json",
     "binding.gyp",
     "prebuilds/**",
@@ -39,7 +42,7 @@
     "tree-sitter-cli": "^0.25.6"
   },
   "peerDependencies": {
-    "tree-sitter": "^0.21.1"
+    "tree-sitter": "^0.25.0"
   },
   "peerDependenciesMeta": {
     "tree-sitter": {
@@ -48,7 +51,8 @@
   },
   "scripts": {
     "build": "tree-sitter generate && tree-sitter build && rm -r build && npm run install",
-    "install": "node-gyp-build && node build-constants.js src/grammar.json",
+    "build:constants": "node build-constants.js src/grammar.json",
+    "install": "node-gyp-build && npm run build:constants",
     "prestart": "tree-sitter build --wasm",
     "start": "tree-sitter playground",
     "test": "node --test bindings/node/*_test.js"
