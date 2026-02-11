@@ -9,7 +9,10 @@
     "email": "vtmsugimoto@gmail.com",
     "url": "https://github.com/vinicius-toshiyu"
   },
-  "main": "bindings/node",
+  "exports": {
+    ".": "./bindings/node/index.js",
+    "./grammar-constants.js": "./grammar-contants.js"
+  },
   "types": "bindings/node",
   "keywords": [
     "incremental",
@@ -60,6 +63,5 @@
     "highlights": [
       "queries/highlights.scm"
     ]
-
   }
 }
