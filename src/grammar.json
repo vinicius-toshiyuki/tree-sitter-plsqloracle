@@ -2818,25 +2818,8 @@
               "name": "chain_expression"
             },
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "table_keyword"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "parenthesis_bracket__open"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "expression"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "parenthesis_bracket__close"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "table_expression"
             },
             {
               "type": "SEQ",
@@ -2872,6 +2855,27 @@
               }
             ]
           }
+        }
+      ]
+    },
+    "table_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "table_keyword"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parenthesis_bracket__open"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parenthesis_bracket__close"
         }
       ]
     },

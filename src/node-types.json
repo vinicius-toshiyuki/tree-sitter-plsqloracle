@@ -1981,7 +1981,7 @@
           "named": true
         },
         {
-          "type": "table_keyword",
+          "type": "table_expression",
           "named": true
         }
       ]
@@ -2217,6 +2217,33 @@
         },
         {
           "type": "string_part",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "table_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "parenthesis_bracket__close",
+          "named": true
+        },
+        {
+          "type": "parenthesis_bracket__open",
+          "named": true
+        },
+        {
+          "type": "table_keyword",
           "named": true
         }
       ]

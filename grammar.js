@@ -364,12 +364,7 @@ module.exports = grammar({
           $.dual_builtin,
           field("table_name", $.accessor),
           $.chain_expression,
-          seq(
-            $.table_keyword,
-            $.parenthesis_bracket__open,
-            $.expression,
-            $.parenthesis_bracket__close,
-          ),
+          $.table_expression,
           seq(
             $.parenthesis_bracket__open,
             $.select,
@@ -377,6 +372,13 @@ module.exports = grammar({
           ),
         ),
         field("table_alias", optional($.identifier)),
+      ),
+    table_expression: ($) =>
+      seq(
+        $.table_keyword,
+        $.parenthesis_bracket__open,
+        $.expression,
+        $.parenthesis_bracket__close,
       ),
     select_tables: ($) =>
       prec.left(

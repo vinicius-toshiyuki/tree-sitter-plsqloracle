@@ -159,6 +159,7 @@ export const GRAMMAR = {
         "_WITH_SELECT": "_with_select",
         "WITH_TABLE": "with_table",
         "SELECT_TABLE": "select_table",
+        "TABLE_EXPRESSION": "table_expression",
         "SELECT_TABLES": "select_tables",
         "SELECT_COLUMN": "select_column",
         "_SELECT_COLUMN_ALIAS": "_select_column_alias",
