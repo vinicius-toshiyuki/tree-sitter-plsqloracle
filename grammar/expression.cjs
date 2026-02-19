@@ -39,7 +39,9 @@ module.exports = {
     ),
 
   binary_expression: ($) =>
-    prec.right(1, seq($.expression, $.binary_operator, $.expression)),
+    prec.left(
+      seq(prec.left($.expression), $.binary_operator, prec.left($.expression)),
+    ),
 
   select_expression: ($) =>
     prec(

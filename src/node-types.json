@@ -717,19 +717,7 @@
           "named": true
         },
         {
-          "type": "parenthesis_bracket__close",
-          "named": true
-        },
-        {
-          "type": "parenthesis_bracket__open",
-          "named": true
-        },
-        {
           "type": "period_punctuation",
-          "named": true
-        },
-        {
-          "type": "plus_operator",
           "named": true
         }
       ]
@@ -756,6 +744,10 @@
       "types": [
         {
           "type": "expression",
+          "named": true
+        },
+        {
+          "type": "left_join_operator",
           "named": true
         },
         {
@@ -1603,19 +1595,7 @@
           "named": true
         },
         {
-          "type": "parenthesis_bracket__close",
-          "named": true
-        },
-        {
-          "type": "parenthesis_bracket__open",
-          "named": true
-        },
-        {
           "type": "period_punctuation",
-          "named": true
-        },
-        {
-          "type": "plus_operator",
           "named": true
         }
       ]
@@ -2804,6 +2784,10 @@
   },
   {
     "type": "keep_keyword",
+    "named": true
+  },
+  {
+    "type": "left_join_operator",
     "named": true
   },
   {

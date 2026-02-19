@@ -517,10 +517,12 @@ module.exports = grammar({
 
     chain_expression: ($) =>
       prec.left(
+        1,
         seq(
           $.expression,
           $.period_punctuation,
           field("chain_member", $.identifier),
+          optional($.left_join_operator),
         ),
       ),
     call_expression: ($) =>
@@ -607,13 +609,6 @@ module.exports = grammar({
               ),
             ),
           ),
-          optional(
-            seq(
-              $.parenthesis_bracket__open,
-              $.plus_operator,
-              $.parenthesis_bracket__close,
-            )
-          )
         ),
       ),
     accessor: ($) =>

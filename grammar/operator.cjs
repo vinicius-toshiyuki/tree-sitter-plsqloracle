@@ -38,4 +38,5 @@ module.exports = {
   arrow_operator: () => "=>",
   range_operator: () => token(prec(2, "..")),
   exists_operator: () => KEYWORDS.PLSQL_KEYWORDS.EXISTS,
+  left_join_operator: () => token(seq("(", "+", ")")),
 };

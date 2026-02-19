@@ -148,6 +148,7 @@ module.exports = {
             "ARROW_OPERATOR": "arrow_operator",
             "RANGE_OPERATOR": "range_operator",
             "EXISTS_OPERATOR": "exists_operator",
+            "LEFT_JOIN_OPERATOR": "left_join_operator",
             "DUAL_BUILTIN": "dual_builtin",
             "IF_STATEMENT": "if_statement",
             "FOR_STATEMENT": "for_statement",

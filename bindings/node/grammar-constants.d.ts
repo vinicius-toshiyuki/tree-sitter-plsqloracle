@@ -147,6 +147,7 @@ export const GRAMMAR: {
         ARROW_OPERATOR: string;
         RANGE_OPERATOR: string;
         EXISTS_OPERATOR: string;
+        LEFT_JOIN_OPERATOR: string;
         DUAL_BUILTIN: string;
         IF_STATEMENT: string;
         FOR_STATEMENT: string;
