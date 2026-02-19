@@ -607,6 +607,13 @@ module.exports = grammar({
               ),
             ),
           ),
+          optional(
+            seq(
+              $.parenthesis_bracket__open,
+              $.plus_operator,
+              $.parenthesis_bracket__close,
+            )
+          )
         ),
       ),
     accessor: ($) =>

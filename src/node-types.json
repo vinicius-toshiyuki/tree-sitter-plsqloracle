@@ -717,7 +717,19 @@
           "named": true
         },
         {
+          "type": "parenthesis_bracket__close",
+          "named": true
+        },
+        {
+          "type": "parenthesis_bracket__open",
+          "named": true
+        },
+        {
           "type": "period_punctuation",
+          "named": true
+        },
+        {
+          "type": "plus_operator",
           "named": true
         }
       ]
@@ -1591,7 +1603,19 @@
           "named": true
         },
         {
+          "type": "parenthesis_bracket__close",
+          "named": true
+        },
+        {
+          "type": "parenthesis_bracket__open",
+          "named": true
+        },
+        {
           "type": "period_punctuation",
+          "named": true
+        },
+        {
+          "type": "plus_operator",
           "named": true
         }
       ]

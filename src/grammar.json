@@ -5000,6 +5000,31 @@
                 "type": "BLANK"
               }
             ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "parenthesis_bracket__open"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "plus_operator"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "parenthesis_bracket__close"
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
