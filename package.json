@@ -11,7 +11,7 @@
   },
   "exports": {
     ".": "./bindings/node/index.js",
-    "./grammar-constants": "./grammar-constants.js"
+    "./grammar-constants": "./bindings/node/grammar-constants.js"
   },
   "types": "bindings/node",
   "keywords": [

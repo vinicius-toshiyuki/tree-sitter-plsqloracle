@@ -93,14 +93,16 @@ const GRAMMAR = {
   FIELD,
 };
 
+const outputDir = path.join(__dirname, "bindings/node");
+
 fs.writeFileSync(
-  path.join(__dirname, "grammar-constants.js"),
+  path.join(outputDir, "grammar-constants.js"),
   `module.exports = ${JSON.stringify({ GRAMMAR }, undefined, 4)};`,
   { encoding: "utf8" },
 );
 
 fs.writeFileSync(
-  path.join(__dirname, "grammar-constants.d.ts"),
+  path.join(outputDir, "grammar-constants.d.ts"),
   `export const GRAMMAR: {
     RULE: {
       ${Object.entries(GRAMMAR.RULE)
